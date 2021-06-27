@@ -5,6 +5,8 @@
  import helmet from "helmet";
  import {operationRouter} from './route/operations.route'
  import {userRouter} from './route/user.route'
+ import {utilRouter} from './route/util.route'
+
 
  dotenv.config();
 
@@ -21,6 +23,9 @@
  app.use(express.json());
  app.use("/api/operation", operationRouter);
  app.use("/api/user", userRouter);
+ app.use("/api", utilRouter);
+
+ utilRouter
 
 
  app.listen(PORT, () => {
