@@ -1,62 +1,55 @@
 
-import { BaseUser, User } from '../model/user.interface'
-
+import { BaseUser, User } from '../model/interface/user.interface'
+import { UserRepository } from '../model/user.repository'
 export class UserService {
 
-    users: User[] =
-        [
-            {
-                id: 'f',
-                name: 'fredy',
-                user: 'fredy',
-                password: 'fredy'
-            },
-            {
-                id: 'd',
-                name: 'diego',
-                user: 'diego',
-                password: 'diego'
-            },
-            {
-                id: 'l',
-                name: 'lucas',
-                user: 'lucas',
-                password: 'lucas'
-            }
-        ]
-
-    public async findUser(user: string): Promise<User> {
-        return this.users[this.users.findIndex((x) => x.user === user)]
+    public async findUser(username: string): Promise<User> {
+        const userRepository = new UserRepository()
+        const result = await userRepository.find(username)
+        const row = result.rows[0]
+        const user: User = {
+            id: row.user_id,
+            username: row.username,
+            password: row.password
+        }
+        return user
     }
 
     public async createUser(newUser: BaseUser): Promise<User> {
-        const id = newUser.user.charAt(0);
-        this.users.push({
-            id,
-            ...newUser,
-        })
-
-        return this.users[this.users.findIndex((x) => x.id === id)];
+        const userRepository = new UserRepository()
+        const result = await userRepository.create(newUser)
+        const row = result.rows[0]
+        const user: User = {
+            id: row.user_id,
+            username: row.username,
+            password: "******"
+        }
+        return user
     };
 
-    public async logInUser(user: string, password: string): Promise<any> {
+    public async logInUser(username: string, password: string): Promise<any> {
+        const user: User = await this.findUser(username)
+        console.log(user.password)
+        console.log(password)
 
-        const objUser: User = await this.findUser(user)
+        console.log(user.password === password)
 
-        if (objUser.password === password) {
-            return objUser
+        if (user.password === password) {
+            const userRepository = new UserRepository()
+            const result = await userRepository.createToken(username)
+            return {
+                token: result.rows[0].token
+            }
         }
         return {
-            message: false
+            message: "contraseña o usuario incorrecto"
         }
     }
 
-
-    public async validateToken(token: string | undefined): Promise<any> {
-        return true
+    public async userToken(token: string | undefined): Promise<any> {
+        const userRepository = new UserRepository()
+        const result = await userRepository.userByToken(token)
+        if (result.rowCount>0) return result.rows[0].user_id
+        return false
     }
-
-
-
-
 }

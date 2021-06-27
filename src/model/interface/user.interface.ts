@@ -1,6 +1,5 @@
 export interface BaseUser {
-    name: string;
-    user: string;
+    username: string;
     password: string;
 }
 
