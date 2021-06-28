@@ -54,3 +54,5 @@ set variables en .env
 ```
 ---
 
+## Docs
+[Documento](https://github.com/open-ruggi/crud-ts/tree/dev/docs)
