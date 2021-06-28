@@ -1,0 +1,23 @@
+version: "3.7"
+services: 
+    web:
+        build: .
+        depends_on:
+            - db
+        environment: 
+            PORT: 7000
+            DB_PASSWORD: fred
+            DB_HOST: db
+        ports:
+            - "7000:7000"
+        links:
+            - "db"
+    db:
+        build:
+            context: .
+            dockerfile: ./Dockerfile.postgres
+        environment: 
+            POSTGRES_PASSWORD: fred
+        ports: 
+            - "5432:5432"
+
