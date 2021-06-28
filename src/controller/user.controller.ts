@@ -8,7 +8,6 @@ export class UserController {
     async logIn(req: Request): Promise<any> {
         const userService = new UserService()
         const body: User = req.body.user
-        console.log(body)
         const token = await userService.logInUser(body.username, body.password);
         return token
 

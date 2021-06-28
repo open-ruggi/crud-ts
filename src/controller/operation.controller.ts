@@ -10,8 +10,7 @@ export class OperationController {
         const resultValue: number = firstValue + secondValue
         const operationService= new OperationService()
         const result = await operationService.save(firstValue,secondValue,resultValue,userId)
-        console.log(result)
-        return resultValue
+        return result.message
     }
 
     async getRecords(userId:number): Promise<any> {
