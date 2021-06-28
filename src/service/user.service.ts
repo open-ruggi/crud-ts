@@ -52,4 +52,13 @@ export class UserService {
         if (result.rowCount>0) return result.rows[0].user_id
         return false
     }
+
+
+    public async logOutUser(token: string | undefined): Promise<any> {
+        const userRepository = new UserRepository()
+        const result = await userRepository.removeTokenyByUser(token)
+        if (result.rowCount>0) return true
+        return false
+    }
+    
 }

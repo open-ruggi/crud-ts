@@ -15,10 +15,11 @@ Para el reto de técnico, se propuso presentar un aplicativo realizado en nodejs
 Puntos a mejorar 
 
 * Manejo correcto de errores
+* La authenticación debio ser un JWT y no un uuid
+* La authenticación debio tener un ttl
+* Manejo correcto de valores segurdos (password)
 
 ---
-
-
 
 ## Requerimientos
 Requirements  [node js](https://nodejs.org/es/)
@@ -52,3 +53,4 @@ set variables en .env
 - docker run -d --env-file .env -p 7000:7000 ruggi/crud-ts
 ```
 ---
+

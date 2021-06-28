@@ -11,7 +11,19 @@ userRouter.post("/login", async (req: Request, res: Response) => {
         const user = await userController.logIn(req)
         return res.status(200).json({ user: user })
     } catch (error) {
-        return res.status(500).json({ message: "password or/and user are incorrect" })
+        return res.status(400).json({ message: "password or/and user are incorrect" })
+    }
+});
+
+userRouter.post("/logout", async (req: Request, res: Response) => {
+    const validate = await userController.validate(req)
+    if (validate === -1)  res.status(400).json({message: 'missing authentication'})
+    if (validate === 0)  res.status(401).json({message: 'incorrect authentication'})
+    try {
+        await userController.logOut(req)
+        return res.status(200).json({ message: "logout sucess" })
+    } catch (error) {
+        return res.status(400).json({ message: "password or/and user are incorrect" })
     }
 });
 
@@ -21,6 +33,6 @@ userRouter.post("/create", async (req: Request, res: Response) => {
         return res.status(200).json({ user: user })
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ message: error.detail })
+        return res.status(400).json({ message: error.detail })
     }
 });
