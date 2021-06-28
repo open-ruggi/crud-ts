@@ -12,7 +12,7 @@ export class OperationService {
             firstValue: firstValue,
             secondValue:secondValue,
             resultValue:resultValue,
-            message: `the sum of the value ${firstValue} plus the value ${firstValue} is ${resultValue} `
+            message: `the sum of the value ${firstValue} plus the value ${secondValue} is ${resultValue} `
 
         }
     };

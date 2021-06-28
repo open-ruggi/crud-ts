@@ -26,6 +26,11 @@ export class UserRepository {
         return pool.query('SELECT * FROM accounts WHERE token=$1', [token]);
     }
 
+    async removeTokenyByUser(token:string| undefined): Promise<QueryResult> {
+        const pool = new DataSource().getPool()
+        return pool.query('UPDATE accounts SET token=$1 WHERE token=$2', [null,token]);
+    }
+    
 
 
 

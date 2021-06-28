@@ -13,10 +13,18 @@ export class UserController {
 
     }
 
+    async logOut(req: Request): Promise<any> {
+        const userService = new UserService()
+        const authorization: string | undefined = req.headers.authorization
+        const result = await userService.logOutUser(authorization);
+       return result
+
+    }
+
     async validate(req: Request): Promise<any> {
         const userService = new UserService()
         const authorization: string | undefined = req.headers.authorization
-        if (typeof(authorization)=== 'undefined') return -1
+        if (typeof (authorization) === 'undefined') return -1
         const result = await userService.userToken(authorization)
         if (result) {
             return result
